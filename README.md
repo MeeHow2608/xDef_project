@@ -9,6 +9,7 @@
 ## Dane:
 - Dane pochodzą od dostawców: Statsbomb oraz Tracab
 - Projekt zakłada wykorzystanie tylko danych z polskiej Ekstraklasy z sezonu 2022/23
+- Rzeczywiste dane nie są udostępniane
 
 ## Założenia metryki
 - Bierzemy pod uwagę tylko defensywną tercję boiska
