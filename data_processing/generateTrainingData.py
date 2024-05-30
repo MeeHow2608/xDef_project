@@ -5,8 +5,10 @@ import pandas as pd
 from unidecode import unidecode
 
 from merge_names import mergeTeams
+from path import DATA_PATH
 
-PATH = 'D:/xDef_project/xDef/data_all'
+with open(DATA_PATH, 'r') as file:
+    DATA_PATH = file.readline().strip()
 
 def readMatchesId(csv_source):
     matches_df = pd.read_csv(csv_source, sep=';')
@@ -741,14 +743,14 @@ def findPlayersNear(data_tracab, index, data_merge, event, radius): # znajduje g
 
 
 def generate_data(statsbomb_id,  tracab_id, filename): #podaje id i nazwy plików bez koncowek, bo tak łatwiej będzie to zautomatyzować
-    with open(PATH + '/Tracab/' + tracab_id + "_tf10.json", 'r') as f:
+    with open(DATA_PATH + '/Tracab/' + tracab_id + "_tf10.json", 'r') as f:
         data_tracab = json.load(f)
-    with open(PATH + '/statsbomb/' + statsbomb_id + "_events.json", 'r', encoding="utf8") as f:
+    with open(DATA_PATH + '/statsbomb/' + statsbomb_id + "_events.json", 'r', encoding="utf8") as f:
         data_statsbomb = json.load(f)
 
     mergeTeams(statsbomb_id,tracab_id) #generowanie pliku statsbomb_lineups z dołączonymi informacjami tf05
                                         #potrzebne do sprawdzania drużyn
-    with open(PATH + "/info/" + filename + "_info.json", 'r', encoding="utf8") as f:
+    with open(DATA_PATH + "/info/" + filename + "_info.json", 'r', encoding="utf8") as f:
         data_merge = json.load(f)
     print(len(data_tracab["FrameData"]))
 
@@ -1109,10 +1111,10 @@ def generate_data(statsbomb_id,  tracab_id, filename): #podaje id i nazwy plikó
             except:
                 pass
 
-    with open(PATH + "/interceptions/"+ filename + "_interceptions.json", "w") as json_file:
+    with open(DATA_PATH + "/interceptions/"+ filename + "_interceptions.json", "w") as json_file:
         json.dump(interceptions_dict, json_file)
 
-    with open(PATH + "/tackles/"+ filename + "_tackles.json", "w") as json_file:
+    with open(DATA_PATH + "/tackles/"+ filename + "_tackles.json", "w") as json_file:
         json.dump(tackles_dict, json_file)
 
 
@@ -1120,23 +1122,23 @@ def generateBigDataFile(names):
     data = []
     for filename in names:
         try:
-            with open(PATH + "/interceptions/"+ filename + "_interceptions.json", 'r') as file:
+            with open(DATA_PATH + "/interceptions/"+ filename + "_interceptions.json", 'r') as file:
                 filedata = json.load(file)
                 data.append(filedata)
         except:
             pass
-    with open(PATH + "/interceptions/" + "complete_data_interceptions.json", 'w') as file:
+    with open(DATA_PATH + "/interceptions/" + "complete_data_interceptions.json", 'w') as file:
         json.dump(data, file, indent=4)
 
     data = []
     for filename in names:
         try:
-            with open(PATH + "/tackles/" + filename + "_tackles.json", 'r') as file:
+            with open(DATA_PATH + "/tackles/" + filename + "_tackles.json", 'r') as file:
                 filedata = json.load(file)
                 data.append(filedata)
         except:
             pass
-    with open(PATH + "/tackles/" + "complete_data_tackles.json", 'w') as file:
+    with open(DATA_PATH + "/tackles/" + "complete_data_tackles.json", 'w') as file:
         json.dump(data, file, indent=4)
 
 

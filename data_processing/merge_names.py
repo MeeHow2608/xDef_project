@@ -8,12 +8,15 @@ from unidecode import unidecode
 # Znajdowanie informacji o drużynach od obu dostawców danych
 ##############
 
-PATH = 'D:/xDef_project/xDef/data_all'
+from path import DATA_PATH
+
+with open(DATA_PATH, 'r') as file:
+    DATA_PATH = file.readline().strip()
 
 def mergeTeams(statsbomb_id, tracab_id):
-    with open(PATH +  "/Tracab/" + tracab_id+'_tf05.json', 'r') as f:
+    with open(DATA_PATH +  "/Tracab/" + tracab_id+'_tf05.json', 'r') as f:
         data_tracab = json.load(f)
-    with open(PATH + "/statsbomb/"+ statsbomb_id +'_lineups.json', 'r', encoding="utf8") as f:
+    with open(DATA_PATH + "/statsbomb/"+ statsbomb_id +'_lineups.json', 'r', encoding="utf8") as f:
         data_statsbomb = json.load(f)
 
 
@@ -43,7 +46,7 @@ def mergeTeams(statsbomb_id, tracab_id):
         team_away = statsbomb_b
 
 
-    with open(PATH + '/Tracab/'+ tracab_id+'_tf10.json', 'r') as f:
+    with open(DATA_PATH + '/Tracab/'+ tracab_id+'_tf10.json', 'r') as f:
         data_tf10 = json.load(f)
     print(len(data_tf10["FrameData"]))
     i = 0
@@ -113,7 +116,7 @@ def mergeTeams(statsbomb_id, tracab_id):
         data_statsbomb[0]["tf10_team"] = tf10_home
         data_statsbomb[1]["tf10_team"] = tf10_away
 
-    with open(PATH + "/info/" + team_home + "_" + team_away +"_info.json", "w") as plik:
+    with open(DATA_PATH + "/info/" + team_home + "_" + team_away +"_info.json", "w") as plik:
         json.dump(data_statsbomb, plik, indent=2)
 
 

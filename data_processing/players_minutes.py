@@ -6,6 +6,11 @@ import numpy as np
 # Funkcja  zwracająca liczbę rozegranych minut dla każdego zawodnika występującego w danych
 #############################
 
+from path import DATA_PATH
+
+with open(DATA_PATH, 'r') as file:
+    DATA_PATH = file.readline().strip()
+
 def read_minutes_matches():
     df = readMatchesId("data/match_list.csv")
     players_info = {}
@@ -16,7 +21,7 @@ def read_minutes_matches():
                                    'cracovia_slask', 'lech_pogon', 'lech_gornik', 'cracovia_miedz',
                                    'pogon_legia', 'pogon_miedz', 'rakow_zaglebie', 'rakow_warta']:
             print(row['filename'])
-            with open(PATH + "/statsbomb/" + str(row['statsbomb_id']) + '_lineups.json', 'r', encoding="utf8") as f:
+            with open(DATA_PATH + "/statsbomb/" + str(row['statsbomb_id']) + '_lineups.json', 'r', encoding="utf8") as f:
                 data_statsbomb = json.load(f)
 
 
