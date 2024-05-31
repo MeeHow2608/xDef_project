@@ -1,4 +1,4 @@
-from generateTrainingData import PATH, readMatchesId
+from generateTrainingData import readMatchesId
 import json
 from collections import Counter
 import numpy as np
@@ -8,18 +8,12 @@ import numpy as np
 
 from path import DATA_PATH
 
-with open(DATA_PATH, 'r') as file:
-    DATA_PATH = file.readline().strip()
-
 def read_minutes_matches():
-    df = readMatchesId("data/match_list.csv")
+    df = readMatchesId(DATA_PATH + "/match_list.csv")
     players_info = {}
     for index, row in df.iterrows(): # pomijam mecze z niepełnymi danymi
-        if row['filename'] not in ['pogon_widzew', 'cracovia_legia', 'lech_wisla', 'rakow_jagiellonia',
-                                   'pogon_zaglebie', 'cracovia_warta', 'pogon_lech', 'lech_rks',
-                                   'cracovia_lech', 'lech_rakow', 'cracovia_gornik', 'lech_lechia',
-                                   'cracovia_slask', 'lech_pogon', 'lech_gornik', 'cracovia_miedz',
-                                   'pogon_legia', 'pogon_miedz', 'rakow_zaglebie', 'rakow_warta']:
+        # na potrzeby udostępnienia kodu generujemy pliki tylko dla 3 meczy
+        if row['filename'] in ['pogon_jagiellonia', 'cracovia_zaglebie', 'cracovia_widzew']:
             print(row['filename'])
             with open(DATA_PATH + "/statsbomb/" + str(row['statsbomb_id']) + '_lineups.json', 'r', encoding="utf8") as f:
                 data_statsbomb = json.load(f)
@@ -78,7 +72,7 @@ def read_minutes_matches():
         elif len(clubs) == 1:
             player_info["club"] = clubs[0]
 
-    with open("players_minutes_played.json", "w", encoding="utf-8") as json_file:
+    with open(DATA_PATH+"/additional_data/players_minutes_played.json", "w", encoding="utf-8") as json_file:
         json.dump(players_info, json_file, ensure_ascii=False)
 
-#read_minutes_matches()
+read_minutes_matches()

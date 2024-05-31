@@ -1,1 +1,1 @@
-DATA_PATH = 'D:/xDef_project/xDef/data_all'
+DATA_PATH = 'D:/xDef_project/data'

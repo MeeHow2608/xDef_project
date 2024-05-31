@@ -3,12 +3,9 @@ import math
 from datetime import datetime
 import pandas as pd
 from unidecode import unidecode
-
+import os
 from merge_names import mergeTeams
 from path import DATA_PATH
-
-with open(DATA_PATH, 'r') as file:
-    DATA_PATH = file.readline().strip()
 
 def readMatchesId(csv_source):
     matches_df = pd.read_csv(csv_source, sep=';')
@@ -1144,24 +1141,21 @@ def generateBigDataFile(names):
 
 # Wywołanie:
 
-'''
 
-df = readMatchesId("data/match_list.csv")
+
+df = readMatchesId(DATA_PATH + "/match_list.csv")
 
 
 for index, row in df.iterrows():
-    if os.path.exists(PATH + "/interceptions/" + row['filename']+ "_interceptions.json"):
+    if os.path.exists(DATA_PATH + "/interceptions/" + row['filename']+ "_interceptions.json"):
         pass
     else:
-        if row['filename'] not in ['pogon_widzew','cracovia_legia','lech_wisla','rakow_jagiellonia',
-                                   'pogon_zaglebie', 'cracovia_warta', 'pogon_lech', 'lech_rks',
-                                   'cracovia_lech', 'lech_rakow', 'cracovia_gornik', 'lech_lechia',
-                                   'cracovia_slask', 'lech_pogon', 'lech_gornik', 'cracovia_miedz',
-                                   'pogon_legia', 'pogon_miedz', 'rakow_zaglebie', 'rakow_warta']:
+        # na potrzeby udostępnienia kodu generujemy pliki tylko dla 3 meczy
+        if row['filename'] in ['pogon_jagiellonia','cracovia_zaglebie','cracovia_widzew']:
             print(row['filename'])
             generate_data(str(row['statsbomb_id']), str(row['tracab_id']), str(row['filename']))
 
 generateBigDataFile(df["filename"].values)
 
 
-'''
+

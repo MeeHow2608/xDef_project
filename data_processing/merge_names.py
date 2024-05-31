@@ -10,8 +10,6 @@ from unidecode import unidecode
 
 from path import DATA_PATH
 
-with open(DATA_PATH, 'r') as file:
-    DATA_PATH = file.readline().strip()
 
 def mergeTeams(statsbomb_id, tracab_id):
     with open(DATA_PATH +  "/Tracab/" + tracab_id+'_tf05.json', 'r') as f:
